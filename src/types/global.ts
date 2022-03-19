@@ -1,15 +1,21 @@
-interface INormalizeRequired {
-  test?: boolean;
-}
-
 interface INormalizePartial {
   disableUnmount: boolean;
   transitionDuration: number;
 }
 
-export type UCN<P extends object = {}> = P &
-  Partial<INormalizePartial> &
-  INormalizeRequired;
-export type UCNP<P extends object = {}> = Partial<P> &
-  Partial<INormalizePartial> &
-  INormalizeRequired;
+export type UCN<P extends object = {}> = Partial<P> &
+  Partial<INormalizePartial>;
+
+export interface IComponentWithMask {
+  visible: boolean;
+  onClose?: () => void;
+  closeableMask?: boolean;
+  maskClass?: string;
+  wrapperClass?: string;
+}
+
+export type These<T> = {
+  [P in keyof T]: T[P];
+};
+
+export type IPlacement = "left" | "right" | "top" | "bottom";
