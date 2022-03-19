@@ -1,7 +1,7 @@
-import { IMaskComponent, IPlacement, These, UCN } from "./global";
+import { IComponentWithMask, IPlacement, These, UCN } from "./global";
 
 export interface DrawerProps
-  extends These<Partial<StyledDrawerProps> & IMaskComponent> {
+  extends These<Partial<StyledDrawerProps> & IComponentWithMask> {
   resizeable?: boolean;
 }
 
