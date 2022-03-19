@@ -17,5 +17,3 @@ export interface IComponentWithMask {
 export type These<T> = {
   [P in keyof T]: T[P];
 };
-
-export type IPlacement = "left" | "right" | "top" | "bottom";
