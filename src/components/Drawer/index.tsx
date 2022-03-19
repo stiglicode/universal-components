@@ -1,10 +1,11 @@
 import { StyledDrawer } from "./StyledDrawer";
-import { FC, useRef } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { DrawerProps } from "../../types/drawer";
 import { defaultSettings } from "../../settings";
 import { usePortal } from "../../hooks/usePortal";
 import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
+import { detectDirection } from "./placement";
 
 export const DrawerComponent: FC<DrawerProps> = ({
   visible,
@@ -18,9 +19,78 @@ export const DrawerComponent: FC<DrawerProps> = ({
   disableSmoothness = false,
   wrapperClass,
   maskClass,
+  resizeable,
+  resizerClass,
+  resizerSize = 2,
+  onResizeStart,
+  onResizeEnd,
+  onResize,
+  cachedResizeSize = false,
 }) => {
   const [mounted, portal] = usePortal();
+  const [isDragging, setDragging] = useState(false);
+  const [wrapperSize, setWrapperSize] = useState(size);
   const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (resizeable) {
+      if (isDragging) {
+        onResizeStart && onResizeStart(wrapperSize);
+      } else {
+        onResizeEnd && onResizeEnd(wrapperSize);
+      }
+    }
+  }, [isDragging]);
+
+  const handleResize = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (!resizeable) return;
+
+    const screenDirection =
+      detectDirection(placement) === "horizontal"
+        ? event.clientX
+        : event.clientY;
+    const oppositeAxis = detectOppositeDirection()
+      ? oppositeOffset() - screenDirection
+      : 0;
+
+    const result =
+      isDragging && detectOppositeDirection()
+        ? oppositeAxis >= size
+          ? oppositeAxis
+          : size
+        : screenDirection >= size
+          ? screenDirection
+          : size;
+
+    if (isDragging && result !== size) {
+      setWrapperSize(result);
+      onResize && onResize(result);
+    }
+  };
+
+  const drawerDirection = () => {
+    const direction = detectDirection(placement);
+    if (direction === "vertical") {
+      return "height";
+    } else {
+      return "width";
+    }
+  };
+
+  const detectOppositeDirection = (): boolean => {
+    return placement === "right" || placement === "bottom";
+  };
+
+  const oppositeOffset = () => {
+    if (ref.current) {
+      if (placement === "right") {
+        return ref.current.clientWidth;
+      } else if (placement === "bottom") {
+        return ref.current.clientHeight;
+      }
+    }
+    return 0;
+  };
 
   return mounted && portal
     ? ReactDOM.createPortal(
@@ -29,24 +99,51 @@ export const DrawerComponent: FC<DrawerProps> = ({
         in={visible}
         unmountOnExit={!disableUnmount}
         timeout={transitionDuration}
+        onExited={() =>
+          resizeable && !cachedResizeSize && setWrapperSize(size)
+        }
       >
         <StyledDrawer
+          afterResize={!visible ? wrapperSize : size}
           size={size}
           placement={placement}
           ref={ref}
           disableSmoothness={disableSmoothness}
+          resizeable={resizeable}
+          resizerSize={resizerSize}
+          onMouseUp={() => setDragging(false)}
+          onMouseMove={handleResize}
+          style={{
+            cursor: isDragging
+              ? detectDirection(placement) === "horizontal"
+                ? "ew-resize"
+                : "ns-resize"
+              : "unset",
+            userSelect: isDragging ? "none" : "all",
+          }}
         >
           <div
-            className={`${defaultSettings.maskClassPrefix(
-              "drawer"
-            )} ${maskClass}`}
+            className={`${defaultSettings.maskClassPrefix("drawer")} ${
+              maskClass || ""
+            }`}
             onClick={() => !closeableMask && onClose && onClose()}
           />
           <div
-            className={`${defaultSettings.wrapperClassPrefix(
-              "drawer"
-            )} ${wrapperClass}`}
+            className={`${defaultSettings.wrapperClassPrefix("drawer")} ${
+              wrapperClass || ""
+            }`}
+            style={{
+              [drawerDirection()]: `${wrapperSize}px`,
+            }}
           >
+            {resizeable && (
+              <div
+                className={`${defaultSettings.wrapperClassPrefix(
+                  "drawer"
+                )}_resizer ${resizerClass || ""}`}
+                onMouseDown={() => setDragging(true)}
+              />
+            )}
             {children}
           </div>
         </StyledDrawer>
