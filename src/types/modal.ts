@@ -1,14 +1,8 @@
-import { UCNP } from "./global";
+import { IComponentWithMask, These, UCN } from "./global";
 
-export interface ModalProps extends Partial<StyledModalProps> {
-  visible: boolean;
-  onClose?: () => void;
-  closeableMask?: boolean;
-  maskClass?: string;
-  wrapperClass?: string;
-}
+export type ModalProps = These<Partial<StyledModalProps> & IComponentWithMask>;
 
-export interface StyledModalProps extends UCNP {
+export interface StyledModalProps extends UCN {
   width: string;
   disableSmoothness: boolean;
 }
