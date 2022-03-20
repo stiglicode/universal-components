@@ -1,10 +1,10 @@
-import { StyledModal } from "./StyledModal";
 import { FC, useRef } from "react";
-import { ModalProps } from "../../types/modal";
+import { ModalProps } from "./Modal.types";
 import { usePortal } from "../../hooks/usePortal";
-import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
 import { defaultSettings } from "../../settings";
+import { ModalStyle } from "./Modal.style";
+import ReactDOM from "react-dom";
 
 export const ModalComponent: FC<ModalProps> = ({
   visible,
@@ -29,7 +29,7 @@ export const ModalComponent: FC<ModalProps> = ({
         unmountOnExit={!disableUnmount}
         timeout={transitionDuration}
       >
-        <StyledModal
+        <ModalStyle
           disableSmoothness={disableSmoothness}
           width={width}
           ref={ref}
@@ -41,7 +41,7 @@ export const ModalComponent: FC<ModalProps> = ({
           <div className={`UC__modal-wrapper ${wrapperClass || ""}`}>
             {children}
           </div>
-        </StyledModal>
+        </ModalStyle>
       </CSSTransition>,
       portal
     )
