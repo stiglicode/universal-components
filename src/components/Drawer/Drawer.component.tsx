@@ -7,7 +7,7 @@ import { CSSTransition } from "react-transition-group";
 import { detectDirection } from "./utilities/placement";
 import { DrawerStyle } from "./Drawer.style";
 
-export const DrawerComponent: FC<DrawerProps> = ({
+export const Drawer: FC<DrawerProps> = ({
   visible,
   disableUnmount = defaultSettings.disableUnmount,
   transitionDuration = defaultSettings.duration,

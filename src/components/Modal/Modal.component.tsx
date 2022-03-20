@@ -6,7 +6,7 @@ import { defaultSettings } from "../../settings";
 import { ModalStyle } from "./Modal.style";
 import ReactDOM from "react-dom";
 
-export const ModalComponent: FC<ModalProps> = ({
+export const Modal: FC<ModalProps> = ({
   visible,
   disableUnmount = defaultSettings.disableUnmount,
   transitionDuration = defaultSettings.duration,
