@@ -1,11 +1,11 @@
-import { StyledDrawer } from "./StyledDrawer";
-import React, { FC, useEffect, useRef, useState } from "react";
-import { DrawerProps } from "../../types/drawer";
+import { FC, useEffect, useRef, useState } from "react";
+import { DrawerProps } from "./Drawer.types";
 import { defaultSettings } from "../../settings";
 import { usePortal } from "../../hooks/usePortal";
 import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
-import { detectDirection } from "./placement";
+import { detectDirection } from "./utilities/placement";
+import { DrawerStyle } from "./Drawer.style";
 
 export const DrawerComponent: FC<DrawerProps> = ({
   visible,
@@ -103,7 +103,7 @@ export const DrawerComponent: FC<DrawerProps> = ({
           resizeable && !cachedResizeSize && setWrapperSize(size)
         }
       >
-        <StyledDrawer
+        <DrawerStyle
           afterResize={!visible ? wrapperSize : size}
           size={size}
           placement={placement}
@@ -146,7 +146,7 @@ export const DrawerComponent: FC<DrawerProps> = ({
             )}
             {children}
           </div>
-        </StyledDrawer>
+        </DrawerStyle>
       </CSSTransition>,
       portal
     )

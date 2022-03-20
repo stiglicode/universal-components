@@ -1,9 +1,13 @@
 import styled, { css } from "styled-components";
 import { defaultSettings } from "../../settings";
-import { detectDirection, drawerPlacement, resizerPosition } from "./placement";
-import { StyledDrawerProps } from "../../types/drawer";
+import {
+  detectDirection,
+  drawerPlacement,
+  resizerPosition,
+} from "./utilities/placement";
+import { DrawerStyleProps } from "./Drawer.types";
 
-export const StyledDrawer = styled.div<StyledDrawerProps>(
+export const DrawerStyle = styled.div<DrawerStyleProps>(
   ({ size, placement, disableSmoothness, afterResize, resizerSize }) => {
     return css`
       position: absolute;

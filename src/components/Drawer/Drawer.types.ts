@@ -1,7 +1,7 @@
-import { IComponentWithMask, These, UCN } from "./global";
+import { IComponentWithMask, These, UCN } from "../../types";
 
 export interface DrawerProps
-  extends These<Partial<StyledDrawerProps> & IComponentWithMask> {
+  extends These<Partial<DrawerStyleProps> & IComponentWithMask> {
   resizerClass?: string;
   onResize?: (position: number) => void;
   onResizeStart?: (position: number) => void;
@@ -9,7 +9,7 @@ export interface DrawerProps
   cachedResizeSize?: boolean;
 }
 
-export interface StyledDrawerProps extends UCN {
+export interface DrawerStyleProps extends UCN {
   size: number;
   readonly afterResize?: number;
   placement: IPlacement;

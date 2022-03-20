@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
-import { StyledModalProps } from "../../types/modal";
+import { ModalStyleProps } from "./Modal.types";
 import { defaultSettings } from "../../settings";
 
-export const StyledModal = styled.div<Partial<StyledModalProps>>(
+export const ModalStyle = styled.div<Partial<ModalStyleProps>>(
   ({ width, disableSmoothness }) => {
     return css`
       position: absolute;

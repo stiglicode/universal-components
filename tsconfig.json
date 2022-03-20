@@ -1,32 +1,41 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "esModuleInterop": true,
     "lib": [
+      "es5",
+      "es2015",
+      "es2016",
       "dom",
       "dom.iterable",
       "esnext"
     ],
+    "types": [
+      "node"
+    ],
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "outDir": "dist/esm",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es6",
+    "module": "esnext",
     "allowJs": true,
     "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
-    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
     "jsx": "react-jsx",
-    "strict": false,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
-    "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": false
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "src"
+    "src/**/*.ts",
+    "src/**/*.tsx"
   ]
 }

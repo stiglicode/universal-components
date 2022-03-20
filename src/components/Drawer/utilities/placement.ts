@@ -1,5 +1,5 @@
 import { css, FlattenSimpleInterpolation } from "styled-components";
-import { IPlacement } from "../../types/drawer";
+import { IPlacement } from "../Drawer.types";
 
 export const drawerPlacement = (
   placement: IPlacement,
